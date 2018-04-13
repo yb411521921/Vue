@@ -1,0 +1,83 @@
+﻿@{
+    string appname = ViewData["AppName"] as string;
+    bool spa = true;
+    if (appname == null)
+    {
+        spa = false;
+        appname = "appnospa";
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>@ViewData["Title"] Layout</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <environment exclude="Development">
+        <link rel="preload" as="script" asp-href-include="/js/vendor.*.js" />
+        <link rel="preload" as="script" asp-href-include=@($"/js/{appname}.*.js") />
+        <link rel="preload" as="style" asp-href-include=@($"/css/{appname}.*.css") />
+        <link rel="stylesheet" asp-href-include=@($"/css/{appname}.*.css") />
+    </environment>
+    <environment include="Development">
+        <link rel="preload" as="script" asp-href-include=@($"/{appname}.js")>
+    </environment>
+</head>
+<body>
+    @if (spa)
+    {
+        @RenderBody()
+    }
+    else
+    {
+        <div id="appnavbar"></div>
+        <div id="container" class="container">
+            @RenderBody()
+        </div>
+    }
+
+    <environment exclude="Development">
+        <script type=text/javascript>
+            (function (r) {                 /* Temporary solution (by webpack) */
+                var n = window["webpackJsonp"];
+                window["webpackJsonp"] = function (e, u, c) {
+                    for (var i, f, p, l = 0, a = []; l < e.length; l++)
+                        f = e[l], t[f] && a.push(t[f][0]), t[f] = 0;
+                    for (i in u) Object.prototype.hasOwnProperty.call(u, i) && (r[i] = u[i]); n && n(e, u, c);
+                    while (a.length) a.shift()();
+                    if (c)
+                        for (l = 0; l < c.length; l++)p = o(o.s = c[l]);
+                    return p
+                };
+                var e = {}, t = { 2: 0 };
+                function o(n) {
+                    if (e[n]) return e[n].exports;
+                    var t = e[n] = { i: n, l: !1, exports: {} };
+                    return r[n].call(t.exports, t, t.exports, o), t.l = !0,
+                        t.exports
+                } o.m = r, o.c = e, o.d = function (r, n, e) { o.o(r, n) || Object.defineProperty(r, n, { configurable: !1, enumerable: !0, get: e }) },
+                    o.n = function (r) {
+                        var n = r && r.__esModule ? function () { return r["default"] } : function () { return r };
+                        return o.d(n, "a", n), n
+                    }, o.o = function (r, n) { return Object.prototype.hasOwnProperty.call(r, n) }, o.p = "/",
+                    o.oe = function (r) { throw console.error(r), r }
+            })([]);
+        </script>
+        <script type=text/javascript asp-src-include="/js/vendor.*.js"></script>
+        <script type=text/javascript asp-src-include=@($"/js/{appname}.*.js")></script>
+    </environment>
+    <environment include="Development">
+        <script type="text/javascript" asp-src-include=@($"/{appname}.js")></script>
+    </environment>
+
+    @if (!spa)
+    {
+        <script lang="javascript">
+            window.__createComponent("NavBar", "#appnavbar");
+        </script>
+    }
+    @RenderSection("scripts", required: false)
+    </body>
+</html>

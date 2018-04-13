@@ -1,0 +1,42 @@
+{
+  "name": "vuecli3",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build-dev": "vue-cli-service build --mode development"
+  },
+  "dependencies": {
+    "vue": "^2.5.13",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^6.0.0",
+    "vue-router": "^3.0.1",
+    "bootstrap": "^4.0.0",
+    "bootstrap-vue": "^2.0.0-rc.6",
+    "jquery": "^1.9.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0-beta.6",
+    "@vue/cli-plugin-typescript": "^3.0.0-beta.6",
+    "@vue/cli-service": "^3.0.0-beta.6",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "vue-template-compiler": "^2.5.13"
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

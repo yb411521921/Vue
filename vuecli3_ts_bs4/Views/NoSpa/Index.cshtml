@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "No SPA Page";
+}
+<div id="homenospa" data-init-vue="@System.Uri.EscapeUriString("{ \"init\": \"This Message is set from NoSpa/index.html\"}")"></div>
+
+<div id="slider" data-init-vue="@System.Uri.EscapeUriString("{ \"value\": \"50\"}")"></div>
+<h1 id="slidervalue">??</h1>
+
+<button type="button" class="btn btn-primary" onclick="alert('pure Bootstrap Button clicked')">Pure Bootstrap Button</button>
+
+@section scripts {
+    <script lang="javascript">
+        window.__createComponent("Home", "#homenospa");
+        var sliderValue = document.getElementById("slidervalue");
+        window.__createComponent("Slider", "#slider", function (inputValue) {
+            sliderValue.innerText = inputValue;
+        });
+    </script>
+}
+
