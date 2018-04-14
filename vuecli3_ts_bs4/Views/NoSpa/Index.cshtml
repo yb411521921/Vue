@@ -12,8 +12,11 @@
     <script lang="javascript">
         window.__createComponent("Home", "#homenospa");
         var sliderValue = document.getElementById("slidervalue");
-        window.__createComponent("Slider", "#slider", function (inputValue) {
-            sliderValue.innerText = inputValue;
+        window.__createComponent("Slider", "#slider", {
+            type: 'input',
+            function: function(inputValue) {
+                sliderValue.innerText = inputValue;
+            }
         });
     </script>
 }

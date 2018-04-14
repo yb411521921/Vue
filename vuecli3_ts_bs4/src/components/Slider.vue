@@ -32,6 +32,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
+import Helper from '../helper';
 
 @Component
 export default class SliderComponent extends Vue {
@@ -339,15 +340,7 @@ export default class SliderComponent extends Vue {
     }
 
     beforeMount() : void {
-        if (this.$parent.$el) {
-            var jsonData = decodeURIComponent(<any>this.$parent.$el.getAttribute("data-init-vue"));
-            if (jsonData) {
-                var initData = JSON.parse(jsonData);
-                for(var propertyName in initData) {
-                    (<any>this)._props[propertyName] = initData[propertyName];
-                }
-            }
-        }
+        Helper.processDataInitVue(this);
     }
     mounted(): void {
         if (typeof window === 'undefined' || typeof document === 'undefined') {
