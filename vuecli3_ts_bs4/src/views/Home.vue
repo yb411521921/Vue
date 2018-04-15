@@ -21,7 +21,7 @@ export default class Home extends Vue {
         alert('Bootstrap-Vue button clicked');
     }
     beforeMount() {
-        Helper.processDataInitVue(this);
+        Helper.processInitProps(this);
     }
 }
 </script>

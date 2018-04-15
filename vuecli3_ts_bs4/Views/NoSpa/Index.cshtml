@@ -1,23 +1,35 @@
 ﻿@{
-    ViewData["Title"] = "No SPA Page";
+    bool mountVue = false;
+    ViewData["MountVue"] = mountVue;
 }
-<div id="homenospa" data-init-vue="@System.Uri.EscapeUriString("{ \"init\": \"This Message is set from NoSpa/index.html\"}")"></div>
 
-<div id="slider" data-init-vue="@System.Uri.EscapeUriString("{ \"value\": \"50\"}")"></div>
-<h1 id="slidervalue">??</h1>
-
-<button type="button" class="btn btn-primary" onclick="alert('pure Bootstrap Button clicked')">Pure Bootstrap Button</button>
-
-@section scripts {
-    <script lang="javascript">
-        window.__createComponent("Home", "#homenospa");
-        var sliderValue = document.getElementById("slidervalue");
-        window.__createComponent("Slider", "#slider", {
-            type: 'input',
-            function: function(inputValue) {
+@if (mountVue)
+{
+    ViewData["Title"] = "No SPA Page compiled";
+    <home msg="This Message is set from NoSpa/index.html"></home>
+    <slider v-model="value"></slider>
+    <h1 id="slidervalue">{{value}}</h1>
+    @section scripts {
+        <script lang="javascript">
+            var components = window.__getComponents();  // test it */
+        </script>
+    }
+}
+else
+{
+    ViewData["Title"] = "No SPA Page manually";
+    <div id="homenospa" init="This Message is set from NoSpa/index.html")"></div>
+    <div id="slider" v-prop:value="66" v-event:input="setSliderValue" tooltip-styles="{ 'backgroundColor': 'red', 'borderColor': 'red' }"></div>
+    <h1 id="slidervalue">??</h1>
+    @section scripts {
+        <script lang="javascript">
+            window.__createComponent("Home", "#homenospa");
+            var sliderValue = document.getElementById("slidervalue");
+            window.__createComponent("Slider", "#slider");
+            function setSliderValue(inputValue) {
                 sliderValue.innerText = inputValue;
-            }
-        });
-    </script>
+            } 
+        </script>
+    }
 }
-
+<button type="button" class="btn btn-primary" onclick="alert('pure Bootstrap Button clicked')">Pure Bootstrap Button</button>

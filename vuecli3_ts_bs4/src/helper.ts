@@ -1,5 +1,5 @@
 ﻿import Vue from 'vue'
-import { isArray } from 'util';
+import { isArray, isUndefined } from 'util';
 
 export default class Helper {
     static processDataInitVue(vue: Vue): void {
@@ -13,24 +13,52 @@ export default class Helper {
             }
         }
     }
-    static installHandler(vue: Vue, handler: any) {
-        if (handler.type && typeof handler.type === 'string' && handler.function && typeof handler.function === 'function') {
-            vue.$children[0].$on(handler.type, (arg: any) => handler.function(arg));
-        }
-        else {
-            throw ("Illegal handler");
+    static processInitProps(vue: Vue): void {
+        if (vue.$parent.$el) {
+            for (var i = 0; i < vue.$parent.$el.attributes.length; i++) {
+                var attr: Attr | null = vue.$parent.$el.attributes.item(i);
+                if (attr != null) {
+                    var attrName = attr.name;
+                    if (attrName == 'id')
+                        continue;
+                    if (attrName == 'data-init-vue')
+                        continue;
+                    if (attrName.startsWith('v-event:')) {
+                        attrName = attrName.substring(8);
+                        attrName = Helper.hyphenToCamelCase(attrName);
+                        var func: any = (<any>window)[attr.value];
+                        vue.$on(attrName, (arg: any) => func(arg)); 
+                        continue;
+                    }
+                    var attrValue: any = attr.value;
+                    if (attrName.startsWith('v-prop:')) {
+                        attrName = attrName.substring(7);
+                    }
+                    attrName = Helper.hyphenToCamelCase(attrName);
+                    var prop = vue.$props[attrName];
+                    if (isUndefined(prop)) {
+                        throw ("Illegal property" + attrName);
+                    }
+                    if (attrValue.charAt(0) == '{') {
+                        attrValue = attrValue.replace(/'/g, '"'); 
+                        attrValue = JSON.parse(attrValue);
+                    }
+                    else if (attrValue.charAt(0) == '[') {
+                        attrValue = attrValue.replace(/'/g, '"'); 
+                        attrValue = JSON.parse(attrValue);
+                    }
+                    vue.$props[attrName] = attrValue;
+                }
+            }
         }
     }
-    static mountAndInstallHandler(vue: Vue, mountpoint: string, handler: any) {
-        vue.$mount(mountpoint);
-        if (handler) {
-            if (isArray(handler)) {
-                for (var i = 0; i < handler.length; i++)
-                    Helper.installHandler(vue, handler[i]);
-            }
-            else
-                Helper.installHandler(vue, handler);
-        }
+    static hyphenToCamelCase(hyphen: string) : string {
+        return hyphen.replace(/-([a-z])/g, function (match) {
+            return match[1].toUpperCase();
+        });
+    }
+    static camelCaseToHyphen(camelCase: string) : string {
+        return camelCase.replace(/[A-Z]/g, '-$1').toLowerCase();
     }
 }
 

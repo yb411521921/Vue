@@ -340,7 +340,7 @@ export default class SliderComponent extends Vue {
     }
 
     beforeMount() : void {
-        Helper.processDataInitVue(this);
+        Helper.processInitProps(this);
     }
     mounted(): void {
         if (typeof window === 'undefined' || typeof document === 'undefined') {

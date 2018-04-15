@@ -9,5 +9,6 @@
             .entry('appnospa')
             .add('./src/main_nospa.ts')
             .end()
+            .resolve.alias.set('vue$', 'vue/dist/vue.esm.js')
     }
 }
