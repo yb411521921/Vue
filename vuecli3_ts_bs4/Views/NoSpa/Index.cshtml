@@ -24,8 +24,9 @@ else
     @section scripts {
         <script lang="javascript">
             window.__createComponent("Home", "#homenospa");
-            var sliderValue = document.getElementById("slidervalue");
             window.__createComponent("Slider", "#slider");
+            var sliderValue = document.getElementById("slidervalue");
+
             function setSliderValue(inputValue) {
                 sliderValue.innerText = inputValue;
             } 
