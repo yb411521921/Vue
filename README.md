@@ -12,23 +12,15 @@ My goal was :
 
 **Important :**
 
-There are still some flaws in the prototype. Solutions are welcome !! (please apply _issues_)
+There are still some things missing in the prototype. Solutions are welcome !! (please apply _issues_)
 I plan to improve this things.
 
-1. Typescript definition for boostrap-vue
-
-Create a file **index.d.ts** inside node_modules/bootstrap_vue/es after **npm install** with this content :
-```<Typescript>
-import {PluginObject} from 'vue';
-export declare const bootstrap : PluginObject<{}>;
-```
-
-2. **Manually** build the bundles after changing of Vue components or typescript files.
+1. **Manually** build the bundles after changing of Vue components or typescript files.
 
 If you use ASPNET Development : **npm run build-dev**<br>
 If you use ASPNET Production  : **npm run build**
 
-3. Debugging Typescript does not work properly 
+2. Debugging Typescript does not work properly 
 
 **How does the prototype work :**
 

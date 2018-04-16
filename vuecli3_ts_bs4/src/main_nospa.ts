@@ -2,15 +2,14 @@ import Vue, { PluginObject } from 'vue'
 import Home from '@/views/Home.vue'
 import Slider from '@/components/Slider.vue'
 import NavBar from '@/components/NavBar.vue';
-import bootstrapVue from 'bootstrap-vue/es';
+import bootstrapVue from 'bootstrap-vue';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import '@/css/mystyle.scss';
 
 Vue.config.productionTip = false
-var bootstrapPlugin: PluginObject<{}> = <any>bootstrapVue;
-Vue.use(bootstrapPlugin);
+Vue.use(bootstrapVue);
 
 Vue.component('home', Home);
 Vue.component('slider', Slider);
