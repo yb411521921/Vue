@@ -8,6 +8,10 @@ export default class Helper {
             if (jsonData) {
                 var initData = JSON.parse(jsonData);
                 for (var propertyName in initData) {
+                    var prop = vue.$props[propertyName];
+                    if (isUndefined(prop)) {
+                        throw ("Illegal property" + propertyName);
+                    }
                     vue.$props[propertyName] = initData[propertyName];
                 }
             }
@@ -21,8 +25,10 @@ export default class Helper {
                     var attrName = attr.name;
                     if (attrName == 'id')
                         continue;
-                    if (attrName == 'data-init-vue')
+                    if (attrName == 'data-init-vue') {
+                        Helper.processDataInitVue(vue);
                         continue;
+                    }
                     if (attrName.startsWith('v-event:')) {
                         attrName = attrName.substring(8);
                         attrName = Helper.hyphenToCamelCase(attrName);
