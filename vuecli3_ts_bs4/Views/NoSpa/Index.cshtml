@@ -1,12 +1,9 @@
-﻿@{
-    bool mountVue = false;
-    ViewData["MountVue"] = mountVue;
-}
-
-@if (mountVue)
+﻿@inject ClientConfiguration clientConfig
+@if (clientConfig.UseCompile)
 {
     ViewData["Title"] = "No SPA Page compiled";
     <home msg="This Message is set from NoSpa/index.html"></home>
+    <configuration></configuration>
     <slider v-model="value"></slider>
     <h1 id="slidervalue">{{value}}</h1>
     @section scripts {
@@ -18,18 +15,20 @@
 else
 {
     ViewData["Title"] = "No SPA Page manually";
-    <div id="homenospa" init="This Message is set from NoSpa/index.html")"></div>
+    <div id="homenospa" init="This Message is set from NoSpa/index.html"></div>
+    <div id="configuration"></div>
     <div id="slider" v-prop:value="66" v-event:input="setSliderValue" tooltip-styles="{ 'backgroundColor': 'red', 'borderColor': 'red' }"></div>
     <h1 id="slidervalue">??</h1>
     @section scripts {
         <script lang="javascript">
             window.__createComponent("Home", "#homenospa");
+            window.__createComponent("Configuration", "#configuration");
             window.__createComponent("Slider", "#slider");
             var sliderValue = document.getElementById("slidervalue");
 
             function setSliderValue(inputValue) {
                 sliderValue.innerText = inputValue;
-            } 
+            }
         </script>
     }
 }

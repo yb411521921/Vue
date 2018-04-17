@@ -20,7 +20,8 @@ I plan to improve this things.
 If you use ASPNET Development : **npm run build-dev**<br>
 If you use ASPNET Production  : **npm run build**
 
-2. Debugging Typescript does not work properly 
+2. Debugging Typescript does not work properly <br>
+3. HMR is missing
 
 **How does the prototype work :**
 
@@ -31,6 +32,7 @@ Using **vue.config.js** I configured two bundles :
 **While the SPA part is straight forward there are 2 possibilities to use Vue components in .cshtml pages.**
 
 **1. Let Vue compile the rendered cshtml like a template. Of course this will take some time at the client, but usage is easy.**<br>
+
 1.1. Modify _vue.config.use_ to use the whole vue module (_vue/dist/vue.esm.js_) including template compiler (instead of the runtime only module _vue/dist/vue.runtime.esm.js_)<br>
 1.2. Create a vue instance in main_nospa.ts and add all vue components you intend to use in the .cshtml pages. You also must add data definitions for all v-model attributes.
 ```<language>

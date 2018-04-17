@@ -1,11 +1,10 @@
-﻿@{
+﻿@inject ClientConfiguration clientConfig
+@{
     string appname = ViewData["AppName"] as string;
     bool spa = true;
-    bool mountAppNoSpa = false;
     if (appname == null)
     {
         spa = false;
-        mountAppNoSpa = Convert.ToBoolean(ViewData["MountVue"]);
         appname = "appnospa";
     }
 }
@@ -34,7 +33,7 @@
     }
     else
     {
-        if (mountAppNoSpa)
+        if (clientConfig.UseCompile)
         {
             <div id="app-nospa">
                 <nav-bar routed="false"></nav-bar>
@@ -86,12 +85,15 @@
         <script type="text/javascript" asp-src-include=@($"/{appname}.js")></script>
     </environment>
 
-    @if (!spa && !mountAppNoSpa)
+    @if (!spa && !clientConfig.UseCompile)
     {
         <script lang="javascript">
             window.__createComponent("NavBar", "#appnavbar");
         </script>
     }
+    <script lang="javascript">
+        window.__setConfig('@Html.Raw(clientConfig.AsJson)');
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,7 +1,10 @@
 ﻿import Vue from 'vue'
+import store from './store';
 import { isArray, isUndefined } from 'util';
+import { setInterval, clearInterval } from 'timers';
 
 export default class Helper {
+    static timer: NodeJS.Timer;
     static processDataInitVue(vue: Vue): void {
         if (vue.$parent.$el) {
             var jsonData = decodeURIComponent(<any>vue.$parent.$el.getAttribute("data-init-vue"));
@@ -65,6 +68,14 @@ export default class Helper {
     }
     static camelCaseToHyphen(camelCase: string) : string {
         return camelCase.replace(/[A-Z]/g, '-$1').toLowerCase();
+    }
+    static initNow(): void {
+        Helper.timer = setInterval(() =>
+            store.commit('setNow', new Date()),
+            100);
+    }
+    static stopNow(): void {
+        clearInterval(Helper.timer);
     }
 }
 

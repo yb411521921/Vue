@@ -3,8 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>vuecli3</AssemblyName>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="tsconfig.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="src\assets\rectangle-slider.svg" />
@@ -14,6 +18,10 @@
     <Content Include="src\assets\rectangle-slider.svg">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="tsconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
